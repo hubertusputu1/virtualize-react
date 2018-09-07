@@ -1,0 +1,64 @@
+.App {
+  text-align: center;
+}
+
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}¡
+
+.list {
+  padding: 10px;
+}
+
+.listBorder { 
+  border: 1px solid #ebeced;
+  text-align: left;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.image {
+  margin-right: 10px;
+}
+
+.message {
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+img {
+  border-radius: 50%;
+}
+
+.content {
+  padding: 10px;
+}
+
+.dot__online {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 8px;
+  background-color: green;
+  margin-bottom: 8px;
+}
+
+.dot__offline {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  background-color: gray;
+  margin-bottom: 8px;
+}
+
+.lastMessage {
+  font-size: 10px;
+  margin-bottom: 6px;
+}
