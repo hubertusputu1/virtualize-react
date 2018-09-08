@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import moment from 'moment'
 import { List } from 'react-virtualized';
+import 'react-virtualized/styles.css';
 
 const rowCount = 4000;
 const listHeight = 900;
@@ -20,12 +21,20 @@ class App extends Component {
     this.renderList = this.renderList.bind(this)
   }
 
-  componentDidMount() {
+  setEmptyState = () => {
+    this.setState({ 
+      users: {},
+    })
+  }
+
+  fetchApi = () => {
+    this.setEmptyState()
     fetch('http://188.166.251.140:4000/data')
     .then(response => {
       return response.json()
     })
     .then((users) => {
+      console.log(users)
       this.setState({ 
         users: users,
         doneFetch: true
@@ -33,14 +42,20 @@ class App extends Component {
     })
   }
 
-  renderStatus(isBotOn){
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.fetchApi()
+    }, 5000)
+  }
+
+  renderStatus = (isBotOn) => {
     if(isBotOn){
       return <span className='dot__online'></span>
     }
     return <span className='dot__offline'></span>
   }
   
-  renderRow({ index, key, style }) {
+  renderRow = ({ index, key, style }) => {
     const { users } = this.state
     return (
       <div key={key} style={style} className='row listBorder'>
@@ -70,7 +85,7 @@ class App extends Component {
           rowHeight={rowHeight}
           rowRenderer={this.renderRow}
           rowCount={rowCount}
-          overscanRowCount={4000} />
+          overscanRowCount={100} />
         </div>
       )
     }
