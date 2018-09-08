@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "homepage": "https://hubertusputu1.github.io/virtualize-react/",
-  "proxy": "http://188.166.251.140:4000",
   "dependencies": {
     "gh-pages": "^1.2.0",
     "moment": "^2.22.2",

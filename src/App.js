@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('/data')
+    fetch('http://188.166.251.140:4000/data')
     .then(response => {
       return response.json()
     })
