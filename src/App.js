@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
 import moment from 'moment'
+import ReactInterval from 'react-interval';
 import { List } from 'react-virtualized';
 import 'react-virtualized/styles.css';
+
+import './App.css';
 
 const rowCount = 4000;
 const listHeight = 900;
@@ -15,6 +17,8 @@ class App extends Component {
     this.state = {
       users: {},
       doneFetch: false,
+      enabled: true,
+      timeout: 20000,
     }
 
     this.renderRow = this.renderRow.bind(this)
@@ -24,6 +28,7 @@ class App extends Component {
   setEmptyState = () => {
     this.setState({ 
       users: {},
+      doneFetch: false,
     })
   }
 
@@ -34,7 +39,6 @@ class App extends Component {
       return response.json()
     })
     .then((users) => {
-      console.log(users)
       this.setState({ 
         users: users,
         doneFetch: true
@@ -43,9 +47,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => {
-      this.fetchApi()
-    }, 5000)
+    this.fetchApi()
   }
 
   renderStatus = (isBotOn) => {
@@ -92,8 +94,11 @@ class App extends Component {
   }
   
   render() {
+    const { timeout, enabled } = this.state
     return (
       <div className='App'>
+        <ReactInterval {...{timeout, enabled}}
+          callback={() => this.fetchApi()} />
         {this.renderList()}
       </div>
     );
