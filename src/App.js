@@ -6,7 +6,7 @@ import 'react-virtualized/styles.css';
 
 import './App.css';
 
-const rowCount = 4000;
+let overscanRowCount = 1;
 const listHeight = 900;
 const rowHeight = 90;
 const rowWidth = 500;
@@ -18,11 +18,16 @@ class App extends Component {
       users: [],
       doneFetch: false,
       enabled: true,
-      timeout: 10000,
+      timeout: 3000,
+      toggleChange: false
     }
 
     this.renderRow = this.renderRow.bind(this)
     this.renderList = this.renderList.bind(this)
+  }
+
+  componentDidMount() {
+    this.fetchApi()
   }
 
   setEmptyState = () => {
@@ -40,13 +45,11 @@ class App extends Component {
     .then((users) => {
       this.setState({ 
         users: users,
-        doneFetch: true
+        doneFetch: true,
+        toggleChange: !this.state.toggleChange
       })
+      this.state.toggleChange ? overscanRowCount-- : overscanRowCount++
     })
-  }
-
-  componentDidMount() {
-    this.fetchApi()
   }
 
   renderStatus = (isBotOn) => {
@@ -75,6 +78,7 @@ class App extends Component {
   }
 
   renderList() {
+    const { users } = this.state
     return (
       <div className='list'>
         <List
@@ -82,9 +86,9 @@ class App extends Component {
         height={listHeight}
         rowHeight={rowHeight}
         rowRenderer={this.renderRow}
-        rowCount={rowCount}
-        overscanRowCount={1}
-        sortBy='lastMsgTime' />
+        rowCount={users.length}
+        overscanRowCount={overscanRowCount}
+      />
       </div>
     )
   }
